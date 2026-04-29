@@ -27,8 +27,17 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .header-sub{font-size:.8rem;color:var(--ink-faint);letter-spacing:.2em;font-weight:300}
 
 /* Book Intro Bar */
-.book-intro{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 1.5rem;display:flex;gap:0;background:var(--card);border-bottom:1px solid var(--border)}
-.book-intro-item{flex:1;padding:1rem 1.2rem;border-right:1px solid var(--border);transition:background .3s;cursor:default}
+.book-intro{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 1.5rem;background:var(--card);border-bottom:1px solid var(--border)}
+.book-intro-row{display:flex;gap:0;align-items:center;justify-content:space-between;cursor:pointer;padding:.6rem 0;user-select:none;-webkit-tap-highlight-color:transparent}
+.book-intro-row:hover{opacity:.85}
+.book-intro-left{display:flex;gap:.8rem;align-items:center;flex:1}
+.book-intro-item-mini{display:flex;align-items:center;gap:.3rem;font-size:.78rem;color:var(--ink);letter-spacing:.06em}
+.book-intro-item-mini .today-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.5s infinite}
+.book-intro-toggle{font-size:.72rem;color:var(--ink-faint);padding:.2rem .5rem;border:1px solid var(--border);border-radius:12px;white-space:nowrap;transition:all .2s}
+.book-intro-toggle:hover{border-color:var(--accent);color:var(--accent)}
+.book-intro-detail{display:grid;grid-template-columns:1fr 1fr;gap:0;max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s;opacity:0}
+.book-intro-detail.open{max-height:600px;opacity:1}
+.book-intro-item{padding:1rem 1.2rem;border-right:1px solid var(--border);transition:background .3s}
 .book-intro-item:last-child{border-right:none}
 .book-intro-item:hover{background:var(--bg-deep)}
 .book-intro-item.today-book{background:var(--accent-soft)}
@@ -216,7 +225,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .book-name{font-size:1.2rem}
   .cal-day{min-height:44px}
   .cal-day-label{display:none}
-  .book-intro{flex-direction:column}
+  .book-intro-detail{grid-template-columns:1fr}
   .book-intro-item{border-right:none;border-bottom:1px solid var(--border)}
   .book-intro-item:last-child{border-bottom:none}
 }
@@ -241,17 +250,26 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 <!-- Book Intro -->
 <div class="book-intro" id="bookIntro">
-  <div class="book-intro-item" id="introSL">
-    <span class="book-intro-tag" id="tagSL">韵律</span>
-    <div class="book-intro-title">声律启蒙 <span id="todayDotSL"></span></div>
-    <div class="book-intro-author">清 · 车万育（1632—1705），字鹤田，湖南邵阳人，康熙进士，官至兵科给事中</div>
-    <div class="book-intro-desc">按韵分编，分上、下两卷，各十五韵，共三十篇。包罗天文、地理、花木、鸟兽、人物、器物等的虚实应对。从单字对到双字对、三字对、五字对、七字对到十一字对，声韵协调，朗朗上口。不仅训练儿童应对、掌握声韵格律，更蕴含大量历史典故与文学意象。与《笠翁对韵》并称蒙学对仗双璧，对后世对联、诗词创作影响深远。逐日诵读，可培养语感，感受汉语声韵之美。</div>
+  <div class="book-intro-row" onclick="toggleBookIntro()">
+    <div class="book-intro-left">
+      <div class="book-intro-item-mini"><span id="dotSL" class="today-dot" style="visibility:hidden"></span> 声律启蒙</div>
+      <div class="book-intro-item-mini"><span id="dotLW" class="today-dot" style="visibility:hidden"></span> 龙文鞭影</div>
+    </div>
+    <span class="book-intro-toggle" id="introToggle">▼ 简介</span>
   </div>
-  <div class="book-intro-item" id="introLW">
-    <span class="book-intro-tag" id="tagLW">典故</span>
-    <div class="book-intro-title">龙文鞭影 <span id="todayDotLW"></span></div>
-    <div class="book-intro-author">明 · 萧良有（1550—1602），字以占，湖北汉阳人，万历进士，国子监祭酒</div>
-    <div class="book-intro-desc">原名《蒙养故事》，明万历年间萧良有编撰，后经杨臣诤增订并改名。书名取自"龙文，千里马也"，寓意鞭策少年奋发。全书以四言韵文为主，按平水韵编排，每句包含一个历史典故或人物故事，涵盖上古至明代上下数千年人物。"龙文鞭影"与"幼学琼林"并称，读之可广见闻、博知识，被称为"典故小百科"。每日一则，日积月累，可系统了解中华历史文化典故。</div>
+  <div class="book-intro-detail" id="bookIntroDetail">
+    <div class="book-intro-item" id="introSL">
+      <span class="book-intro-tag" id="tagSL">韵律</span>
+      <div class="book-intro-title">声律启蒙</div>
+      <div class="book-intro-author">清 · 车万育（1632—1705），字鹤田，湖南邵阳人，康熙进士，官至兵科给事中</div>
+      <div class="book-intro-desc">按韵分编，分上、下两卷，各十五韵，共三十篇。包罗天文、地理、花木、鸟兽、人物、器物等的虚实应对。从单字对到双字对、三字对、五字对、七字对到十一字对，声韵协调，朗朗上口。不仅训练儿童应对、掌握声韵格律，更蕴含大量历史典故与文学意象。与《笠翁对韵》并称蒙学对仗双璧，对后世对联、诗词创作影响深远。逐日诵读，可培养语感，感受汉语声韵之美。</div>
+    </div>
+    <div class="book-intro-item" id="introLW">
+      <span class="book-intro-tag" id="tagLW">典故</span>
+      <div class="book-intro-title">龙文鞭影</div>
+      <div class="book-intro-author">明 · 萧良有（1550—1602），字以占，湖北汉阳人，万历进士，国子监祭酒</div>
+      <div class="book-intro-desc">原名《蒙养故事》，明万历年间萧良有编撰，后经杨臣诤增订并改名。书名取自"龙文，千里马也"，寓意鞭策少年奋发。全书以四言韵文为主，按平水韵编排，每句包含一个历史典故或人物故事，涵盖上古至明代上下数千年人物。"龙文鞭影"与"幼学琼林"并称，读之可广见闻、博知识，被称为"典故小百科"。每日一则，日积月累，可系统了解中华历史文化典故。</div>
+    </div>
   </div>
 </div>
 
@@ -318,14 +336,19 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div class="date-hint" id="dateHint"></div>
 
       <h3>分享给朋友</h3>
-      <p style="font-size:.78rem">将 <b>index.html</b> 和 <b>data.js</b> 两个文件发给朋友，对方双击打开即可使用。通过在 URL 后加 <code style="background:var(--card);padding:.1rem .3rem;border-radius:3px;font-size:.72rem">?start=2026-04-28</code> 参数可以同步阅读进度。</p>
+      <p style="font-size:.78rem">复制下方链接发给朋友，对方打开即可阅读。带起始日期的链接可同步阅读进度。</p>
       <div class="share-section">
-        <p style="font-size:.76rem;color:var(--ink-light);margin-bottom:.3rem">自定义分享链接（含起始日期参数）：</p>
+        <p style="font-size:.74rem;color:var(--ink-light);margin-bottom:.3rem">基础链接：</p>
+        <div class="share-url-box">
+          <input class="share-url-input" id="shareUrlBase" readonly>
+          <button class="btn-copy" onclick="copyText('shareUrlBase')">复制</button>
+        </div>
+        <p style="font-size:.74rem;color:var(--ink-light);margin:.5rem 0 .3rem">同步进度链接（含你的起始日期）：</p>
         <div class="share-url-box">
           <input class="share-url-input" id="shareUrl" readonly>
-          <button class="btn-copy" onclick="copyShareUrl()">复制参数</button>
+          <button class="btn-copy" onclick="copyText('shareUrl')">复制</button>
         </div>
-        <p style="color:var(--ink-faint);font-size:.68rem;margin-top:.4rem">朋友拿到文件后，在浏览器地址栏的文件路径末尾粘贴 <code style="background:var(--card);padding:.1rem .2rem;border-radius:2px;font-size:.66rem">?start=你的起始日期</code> 即可同步进度。也可以打开后自己在设置中修改日期。</p>
+        <p style="color:var(--ink-faint);font-size:.68rem;margin-top:.4rem">朋友打开同步链接后阅读进度与你一致；对方也可在设置中修改为自己的起始日期，独立阅读。</p>
       </div>
 
       <h3>浏览器通知推送</h3>
@@ -469,9 +492,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     var sl = isSlDay(dayOffset);
     document.getElementById('introSL').classList.toggle('today-book', sl);
     document.getElementById('introLW').classList.toggle('today-book', !sl);
-    document.getElementById('todayDotSL').innerHTML = sl ? '<span class="book-intro-today-dot"></span>今日' : '';
-    document.getElementById('todayDotLW').innerHTML = !sl ? '<span class="book-intro-today-dot"></span>今日' : '';
+    document.getElementById('dotSL').style.visibility = sl ? 'visible' : 'hidden';
+    document.getElementById('dotLW').style.visibility = !sl ? 'visible' : 'hidden';
   }
+
+  window.toggleBookIntro = function(){
+    var detail = document.getElementById('bookIntroDetail');
+    var toggle = document.getElementById('introToggle');
+    var open = detail.classList.toggle('open');
+    toggle.textContent = open ? '▲ 收起' : '▼ 简介';
+  };
 
   // ===== Tab switching =====
   window.switchTab = function(tab){
@@ -684,9 +714,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   window.openSettings = function(){
     document.getElementById('startDateInput').value = formatDateInput(BASE_DATE);
     updateDateHint();
-    // Generate share param (just the ?start= part, works with file:// and http)
-    var shareParam = '?start=' + formatDateInput(BASE_DATE);
-    document.getElementById('shareUrl').value = shareParam;
+    // Generate share URLs
+    var baseUrl = window.location.origin + window.location.pathname;
+    document.getElementById('shareUrlBase').value = baseUrl;
+    document.getElementById('shareUrl').value = baseUrl + '?start=' + formatDateInput(BASE_DATE);
     document.getElementById('settingsModal').classList.add('open');
     updateNotifStatus();
   };
@@ -696,10 +727,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     if(navigator.clipboard){ navigator.clipboard.writeText(text).then(function(){ showToast('已复制到剪贴板'); }); }
     else{ var ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showToast('已复制到剪贴板'); }
   };
-  window.copyShareUrl = function(){
-    var url = document.getElementById('shareUrl').value;
-    if(navigator.clipboard){ navigator.clipboard.writeText(url).then(function(){ showToast('分享链接已复制'); }); }
-    else{ var ta=document.createElement('textarea'); ta.value=url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showToast('分享链接已复制'); }
+  window.copyText = function(id){
+    var el = document.getElementById(id);
+    var text = el ? el.value : '';
+    if(!text) return;
+    if(navigator.clipboard){ navigator.clipboard.writeText(text).then(function(){ showToast('已复制到剪贴板'); }); }
+    else{ var ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showToast('已复制到剪贴板'); }
   };
 
   // ===== Notifications =====
