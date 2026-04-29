@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日古文 · 声律启蒙 & 龙文鞭影</title>
+<meta name="description" content="每日推送一则古典启蒙读物——声律启蒙、龙文鞭影，品味中文之美。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f0e8;--bg-deep:#ebe4d6;--ink:#2c2417;--ink-light:#5c5040;--ink-faint:#8a7e6d;--accent:#c45a3c;--accent-soft:rgba(196,90,60,.1);--gold:#b8943e;--gold-soft:rgba(184,148,62,.1);--card:#faf7f0;--card-shadow:rgba(44,36,23,.08);--border:#d9d0c0;--radius:8px;--green:#5a8f5a;--green-soft:rgba(90,143,90,.12)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Serif SC','Songti SC','SimSun',serif;background:var(--bg);color:var(--ink);line-height:1.9;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 0%,rgba(196,90,60,.04) 0%,transparent 50%),radial-gradient(ellipse at 80% 100%,rgba(184,148,62,.04) 0%,transparent 50%);pointer-events:none;z-index:0}
+
+/* Header */
+.header{position:relative;z-index:1;text-align:center;padding:2.5rem 1.5rem 1.5rem;border-bottom:1px solid var(--border)}
+.header-top{display:flex;align-items:center;justify-content:space-between;max-width:900px;margin:0 auto 1rem}
+.header-brand{display:flex;align-items:center;gap:.6rem}
+.brand-seal{width:36px;height:36px;border:2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'ZCOOL XiaoWei',serif;font-size:.8rem;color:var(--accent);flex-shrink:0}
+.brand-text{font-family:'ZCOOL XiaoWei',serif;font-size:1.1rem;color:var(--ink);letter-spacing:.15em}
+.header-actions{display:flex;gap:.4rem}
+.btn-icon{width:34px;height:34px;border:1px solid var(--border);border-radius:50%;background:var(--card);color:var(--ink-light);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;font-size:.95rem}
+.btn-icon:hover,.btn-icon.active{background:var(--accent);color:#fff;border-color:var(--accent);transform:scale(1.05)}
+.header h1{font-family:'ZCOOL XiaoWei',serif;font-size:1.8rem;font-weight:400;letter-spacing:.3em;color:var(--ink);margin-bottom:.3rem}
+.header-sub{font-size:.8rem;color:var(--ink-faint);letter-spacing:.2em;font-weight:300}
+
+/* Book Intro Bar */
+.book-intro{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 1.5rem;display:flex;gap:0;background:var(--card);border-bottom:1px solid var(--border)}
+.book-intro-item{flex:1;padding:1rem 1.2rem;border-right:1px solid var(--border);transition:background .3s;cursor:default}
+.book-intro-item:last-child{border-right:none}
+.book-intro-item:hover{background:var(--bg-deep)}
+.book-intro-item.today-book{background:var(--accent-soft)}
+.book-intro-tag{display:inline-block;font-size:.6rem;padding:.15rem .5rem;border-radius:10px;margin-bottom:.4rem;letter-spacing:.08em}
+.book-intro-item:nth-child(1) .book-intro-tag{background:var(--gold-soft);color:var(--gold);border:1px solid var(--gold)}
+.book-intro-item:nth-child(2) .book-intro-tag{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent)}
+.book-intro-item .today-book .book-intro-tag{background:var(--accent);color:#fff;border-color:var(--accent)}
+.book-intro-title{font-family:'ZCOOL XiaoWei',serif;font-size:.95rem;color:var(--ink);letter-spacing:.1em;margin-bottom:.25rem}
+.book-intro-author{font-size:.68rem;color:var(--ink-faint);letter-spacing:.06em}
+.book-intro-desc{font-size:.68rem;color:var(--ink-light);line-height:1.7;margin-top:.3rem}
+.book-intro-today-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-left:.3rem;vertical-align:middle;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Tab Bar */
+.tab-bar{display:flex;justify-content:center;gap:0;position:relative;z-index:1;background:var(--card);border-bottom:1px solid var(--border)}
+.tab-btn{padding:.7rem 1.5rem;border:none;background:none;cursor:pointer;font-family:inherit;font-size:.82rem;color:var(--ink-faint);letter-spacing:.12em;transition:all .3s;border-bottom:2px solid transparent}
+.tab-btn:hover{color:var(--ink-light)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:500}
+
+/* Main */
+.main{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:1.5rem}
+.tab-content{display:none;animation:fadeIn .4s ease-out}
+.tab-content.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ====== TODAY TAB ====== */
+.today-nav{display:flex;align-items:center;justify-content:center;gap:1.2rem;padding:.8rem 0;flex-wrap:wrap}
+.date-display{font-size:.82rem;color:var(--ink-faint);letter-spacing:.1em;background:var(--bg-deep);padding:.3rem 1rem;border-radius:20px}
+.btn-nav{padding:.3rem .8rem;border:1px solid var(--border);border-radius:20px;background:var(--card);color:var(--ink-light);cursor:pointer;font-family:inherit;font-size:.76rem;letter-spacing:.08em;transition:all .3s}
+.btn-nav:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* Content Card */
+.content-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 2px 20px var(--card-shadow);overflow:hidden;animation:fadeUp .5s ease-out}
+.card-header{padding:1.3rem 1.8rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.book-info{display:flex;flex-direction:column;gap:.2rem}
+.book-name{font-family:'ZCOOL XiaoWei',serif;font-size:1.5rem;color:var(--ink);letter-spacing:.15em}
+.book-meta{font-size:.72rem;color:var(--ink-faint);letter-spacing:.1em}
+.book-meta span+span::before{content:'\00b7';margin:0 .3rem}
+.chapter-badge{font-size:.72rem;padding:.25rem .7rem;border:1px solid var(--gold);border-radius:20px;color:var(--gold);letter-spacing:.1em;background:var(--gold-soft);white-space:nowrap}
+.card-body{padding:1.5rem 1.8rem}
+.text-section{margin-bottom:1.5rem;position:relative}
+.text-section:last-of-type{margin-bottom:0}
+.text-section::before{content:attr(data-index);position:absolute;top:-.3rem;left:-.3rem;font-family:'ZCOOL XiaoWei',serif;font-size:2.5rem;color:var(--accent);opacity:.08;line-height:1;z-index:0}
+.text-content{position:relative;z-index:1;font-size:1rem;line-height:2.2;text-align:justify;color:var(--ink);letter-spacing:.05em}
+.notes-toggle{display:flex;align-items:center;gap:.5rem;padding:.5rem 0;cursor:pointer;border:none;background:none;font-family:inherit;font-size:.78rem;color:var(--accent);letter-spacing:.06em;width:100%}
+.notes-toggle:hover{color:var(--ink)}
+.notes-toggle .arrow{display:inline-block;transition:transform .3s;font-size:.65rem}
+.notes-toggle.open .arrow{transform:rotate(90deg)}
+.notes-content{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.notes-content.open{max-height:2000px;padding:.3rem 0}
+.note-item{display:flex;gap:.5rem;padding:.4rem 0;border-bottom:1px dashed var(--border);font-size:.8rem;line-height:1.8;color:var(--ink-light);align-items:flex-start}
+.note-item:last-child{border-bottom:none}
+.note-dot{width:4px;height:4px;background:var(--accent);border-radius:50%;margin-top:.55rem;flex-shrink:0}
+.note-link{color:var(--accent);text-decoration:none;font-size:.7rem;margin-left:.3rem;white-space:nowrap;border-bottom:1px dashed var(--accent);transition:all .2s}
+.note-link:hover{color:var(--ink);border-bottom-style:solid}
+
+/* Back to top button */
+.btn-back-top{position:fixed;bottom:2rem;right:1.5rem;width:42px;height:42px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(196,90,60,.3);opacity:0;pointer-events:none;transition:all .3s;z-index:50}
+.btn-back-top.show{opacity:1;pointer-events:auto}
+.btn-back-top:hover{transform:scale(1.1);box-shadow:0 4px 18px rgba(196,90,60,.4)}
+.card-footer{padding:.8rem 1.8rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+.day-counter{font-size:.7rem;color:var(--ink-faint);letter-spacing:.06em}
+.btn-random{padding:.3rem .9rem;border:1px solid var(--gold);border-radius:20px;background:transparent;color:var(--gold);cursor:pointer;font-family:inherit;font-size:.72rem;letter-spacing:.08em;transition:all .3s}
+.btn-random:hover{background:var(--gold);color:#fff}
+
+/* Progress (today tab) */
+.today-progress{margin-top:1.5rem;padding:.8rem 1.2rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius)}
+.progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+.progress-title{font-size:.75rem;color:var(--ink-light);letter-spacing:.08em}
+.progress-pct{font-size:.75rem;color:var(--accent);font-weight:500}
+.progress-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:2px;transition:width .6s ease}
+.progress-stats{display:flex;gap:1.5rem;margin-top:.6rem;font-size:.68rem;color:var(--ink-faint)}
+.progress-stats span::before{content:'';display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:.3rem;vertical-align:middle}
+.stat-read span::before{background:var(--green)}
+.stat-remain span::before{background:var(--border)}
+.stat-cycle span::before{background:var(--gold)}
+
+/* ====== CALENDAR TAB ====== */
+.cal-header{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0;margin-bottom:.8rem}
+.cal-title{font-family:'ZCOOL XiaoWei',serif;font-size:1.1rem;letter-spacing:.15em;color:var(--ink)}
+.cal-nav{display:flex;gap:.4rem}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-weekday{text-align:center;font-size:.68rem;color:var(--ink-faint);padding:.3rem 0;letter-spacing:.1em;font-weight:400}
+.cal-day{aspect-ratio:1;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;border:1px solid transparent;position:relative;min-height:54px}
+.cal-day:hover{background:var(--bg-deep);border-color:var(--border)}
+.cal-day.today{border-color:var(--accent);background:var(--accent-soft)}
+.cal-day.read-sl{background:rgba(184,148,62,.08)}
+.cal-day.read-lw{background:rgba(90,143,90,.08)}
+.cal-day.future{opacity:.35;cursor:default}
+.cal-day.future:hover{background:transparent;border-color:transparent}
+.cal-day-num{font-size:.72rem;color:var(--ink-light);line-height:1}
+.cal-day.today .cal-day-num{color:var(--accent);font-weight:600}
+.cal-day-label{font-size:.55rem;color:var(--ink-faint);margin-top:1px;line-height:1.1;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;padding:0 2px}
+.cal-day.today .cal-day-label{color:var(--accent)}
+.cal-month-nav{display:flex;justify-content:center;gap:1.5rem;padding:.5rem 0}
+.cal-month-btn{padding:.3rem 1rem;border:1px solid var(--border);border-radius:20px;background:var(--card);color:var(--ink-light);cursor:pointer;font-family:inherit;font-size:.76rem;transition:all .3s}
+.cal-month-btn:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.cal-legend{display:flex;gap:1.2rem;justify-content:center;padding:.6rem 0;font-size:.68rem;color:var(--ink-faint)}
+.cal-legend-item{display:flex;align-items:center;gap:.3rem}
+.cal-legend-dot{width:10px;height:10px;border-radius:3px}
+.cal-legend-dot.read-sl{background:rgba(184,148,62,.15);border:1px solid var(--gold)}
+.cal-legend-dot.read-lw{background:rgba(90,143,90,.15);border:1px solid var(--green)}
+.cal-legend-dot.today{background:var(--accent-soft);border:1px solid var(--accent)}
+.cal-legend-dot.future{background:var(--bg-deep);border:1px solid var(--border);opacity:.5}
+
+/* ====== DRAWER ====== */
+.drawer-overlay{position:fixed;inset:0;background:rgba(44,36,23,.3);z-index:100;opacity:0;pointer-events:none;transition:opacity .3s}
+.drawer-overlay.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:-380px;width:360px;max-width:85vw;height:100vh;background:var(--card);z-index:101;transition:right .35s;overflow-y:auto;box-shadow:-4px 0 30px rgba(44,36,23,.1)}
+.drawer.open{right:0}
+.drawer-header{padding:1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.drawer-header h2{font-family:'ZCOOL XiaoWei',serif;font-size:1rem;letter-spacing:.15em;font-weight:400}
+.drawer-close{width:28px;height:28px;border:none;background:none;cursor:pointer;font-size:1.1rem;color:var(--ink-faint);display:flex;align-items:center;justify-content:center}
+.drawer-body{padding:.8rem 1.2rem}
+.drawer-group{margin-bottom:1.2rem}
+.drawer-group-title{font-family:'ZCOOL XiaoWei',serif;font-size:.85rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.4rem;padding-bottom:.3rem;border-bottom:1px dashed var(--border)}
+.drawer-item{display:flex;align-items:center;justify-content:space-between;padding:.4rem .3rem;cursor:pointer;border-radius:4px;transition:background .2s;gap:.5rem}
+.drawer-item:hover{background:var(--bg-deep)}
+.drawer-item.current{background:var(--accent-soft);border-left:2px solid var(--accent)}
+.drawer-item-title{font-size:.8rem;color:var(--ink);letter-spacing:.04em}
+.drawer-item-sub{font-size:.65rem;color:var(--ink-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px}
+.drawer-item-read{font-size:.6rem;color:var(--green);margin-left:.2rem}
+
+/* Push Banner */
+.push-banner{background:linear-gradient(135deg,var(--accent),#d4725a);color:#fff;padding:.6rem 1.2rem;display:flex;align-items:center;justify-content:center;gap:.8rem;flex-wrap:wrap;position:relative;z-index:1;font-size:.78rem;letter-spacing:.06em}
+.push-banner.hidden{display:none}
+.push-btn{padding:.35rem 1rem;border:1px solid rgba(255,255,255,.6);border-radius:20px;background:transparent;color:#fff;cursor:pointer;font-family:inherit;font-size:.75rem;letter-spacing:.08em;transition:all .3s;white-space:nowrap}
+.push-btn:hover{background:#fff;color:var(--accent)}
+
+/* Settings Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(44,36,23,.4);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;display:flex;align-items:center;justify-content:center}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);width:480px;max-width:92vw;max-height:85vh;overflow-y:auto;box-shadow:0 8px 40px rgba(44,36,23,.15);transform:translateY(20px);transition:transform .35s}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-header{padding:1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-header h2{font-family:'ZCOOL XiaoWei',serif;font-size:1rem;letter-spacing:.15em;font-weight:400}
+.modal-body{padding:1.2rem}
+.modal-body h3{font-size:.82rem;color:var(--ink-light);letter-spacing:.1em;margin-bottom:.6rem;margin-top:1.2rem}
+.modal-body h3:first-child{margin-top:0}
+.modal-body p{font-size:.78rem;color:var(--ink-light);line-height:1.8;margin-bottom:.6rem}
+.step{display:flex;gap:.6rem;margin-bottom:.8rem;align-items:flex-start}
+.step-num{width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.65rem;flex-shrink:0;margin-top:.1rem}
+.step-text{font-size:.78rem;color:var(--ink-light);line-height:1.7}
+.modal-footer{padding:.8rem 1.2rem;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:.5rem}
+.modal-btn{padding:.35rem 1rem;border-radius:20px;cursor:pointer;font-family:inherit;font-size:.75rem;letter-spacing:.06em;transition:all .3s}
+.modal-btn.primary{background:var(--accent);color:#fff;border:1px solid var(--accent)}
+.modal-btn.primary:hover{opacity:.85}
+.modal-btn.secondary{background:transparent;color:var(--ink-light);border:1px solid var(--border)}
+.modal-btn.secondary:hover{background:var(--bg-deep)}
+.wb-config{background:var(--bg-deep);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin-top:.8rem}
+.wb-config h4{font-family:'ZCOOL XiaoWei',serif;font-size:.85rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.4rem}
+.wb-config p{font-size:.75rem;color:var(--ink-light);line-height:1.7;margin-bottom:.4rem}
+.wb-config .config-code{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:.6rem;font-family:'Courier New',monospace;font-size:.7rem;color:var(--ink-light);line-height:1.5;overflow-x:auto;white-space:pre-wrap;word-break:break-all}
+.btn-copy{margin-top:.5rem;padding:.25rem .7rem;border:1px solid var(--border);border-radius:4px;background:var(--card);color:var(--ink-light);cursor:pointer;font-family:inherit;font-size:.7rem;transition:all .2s}
+.btn-copy:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* Toast */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:var(--bg);padding:.6rem 1.3rem;border-radius:24px;font-size:.78rem;letter-spacing:.06em;z-index:300;opacity:0;transition:all .4s;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Start Date Setting */
+.date-setting{display:flex;align-items:center;gap:.6rem;padding:.8rem 0;flex-wrap:wrap}
+.date-setting label{font-size:.78rem;color:var(--ink-light);letter-spacing:.06em}
+.date-setting input[type="date"]{font-family:inherit;font-size:.8rem;padding:.3rem .6rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);color:var(--ink);cursor:pointer;outline:none}
+.date-setting input[type="date"]:focus{border-color:var(--accent)}
+.date-hint{font-size:.68rem;color:var(--ink-faint);margin-top:.3rem}
+
+/* Share */
+.share-section{margin-top:.6rem}
+.share-url-box{display:flex;gap:.4rem;margin-top:.4rem}
+.share-url-input{flex:1;font-family:inherit;font-size:.72rem;padding:.3rem .5rem;border:1px solid var(--border);border-radius:4px;background:var(--card);color:var(--ink);outline:none}
+.share-url-input:focus{border-color:var(--accent)}
+
+/* Responsive */
+@media(max-width:640px){
+  .header{padding:2rem 1rem 1.2rem}
+  .header h1{font-size:1.5rem;letter-spacing:.2em}
+  .main{padding:1rem}
+  .card-header{padding:1rem 1.2rem .8rem}
+  .card-body{padding:1rem 1.2rem}
+  .card-footer{padding:.6rem 1.2rem}
+  .text-content{font-size:.92rem;letter-spacing:.03em}
+  .book-name{font-size:1.2rem}
+  .cal-day{min-height:44px}
+  .cal-day-label{display:none}
+  .book-intro{flex-direction:column}
+  .book-intro-item{border-right:none;border-bottom:1px solid var(--border)}
+  .book-intro-item:last-child{border-bottom:none}
+}
+@media print{.header-actions,.push-banner,.tab-bar,.drawer-overlay,.modal-overlay,.toast,.card-footer{display:none}.content-card{box-shadow:none;border:1px solid #ccc}}
+</style>
+</head>
+<body>
+
+<div class="push-banner" id="pushBanner"><span>📖 每日古文推送，不错过每一篇经典</span><button class="push-btn" onclick="requestNotification()">开启推送</button></div>
+
+<header class="header">
+  <div class="header-top">
+    <div class="header-brand"><div class="brand-seal">文</div><div class="brand-text">每日古文</div></div>
+    <div class="header-actions">
+      <button class="btn-icon" id="btnNotif" onclick="openSettings()" title="推送设置">🔔</button>
+      <button class="btn-icon" onclick="openDrawer()" title="全书目录">☰</button>
+    </div>
+  </div>
+  <h1>声律启蒙 · 龙文鞭影</h1>
+  <p class="header-sub">隔日轮换，品味中文韵律之美</p>
+</header>
+
+<!-- Book Intro -->
+<div class="book-intro" id="bookIntro">
+  <div class="book-intro-item" id="introSL">
+    <span class="book-intro-tag" id="tagSL">韵律</span>
+    <div class="book-intro-title">声律启蒙 <span id="todayDotSL"></span></div>
+    <div class="book-intro-author">清 · 车万育（1632—1705），字鹤田，湖南邵阳人，康熙进士，官至兵科给事中</div>
+    <div class="book-intro-desc">按韵分编，分上、下两卷，各十五韵，共三十篇。包罗天文、地理、花木、鸟兽、人物、器物等的虚实应对。从单字对到双字对、三字对、五字对、七字对到十一字对，声韵协调，朗朗上口。不仅训练儿童应对、掌握声韵格律，更蕴含大量历史典故与文学意象。与《笠翁对韵》并称蒙学对仗双璧，对后世对联、诗词创作影响深远。逐日诵读，可培养语感，感受汉语声韵之美。</div>
+  </div>
+  <div class="book-intro-item" id="introLW">
+    <span class="book-intro-tag" id="tagLW">典故</span>
+    <div class="book-intro-title">龙文鞭影 <span id="todayDotLW"></span></div>
+    <div class="book-intro-author">明 · 萧良有（1550—1602），字以占，湖北汉阳人，万历进士，国子监祭酒</div>
+    <div class="book-intro-desc">原名《蒙养故事》，明万历年间萧良有编撰，后经杨臣诤增订并改名。书名取自"龙文，千里马也"，寓意鞭策少年奋发。全书以四言韵文为主，按平水韵编排，每句包含一个历史典故或人物故事，涵盖上古至明代上下数千年人物。"龙文鞭影"与"幼学琼林"并称，读之可广见闻、博知识，被称为"典故小百科"。每日一则，日积月累，可系统了解中华历史文化典故。</div>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('today')">今日古文</button>
+  <button class="tab-btn" onclick="switchTab('calendar')">阅读日历</button>
+</div>
+
+<main class="main">
+  <!-- Today Tab -->
+  <div class="tab-content active" id="tabToday">
+    <div class="today-nav">
+      <div class="date-display" id="dateDisplay"></div>
+      <div style="display:flex;gap:.4rem">
+        <button class="btn-nav" onclick="goDay(-2)">◁ 前日</button>
+        <button class="btn-nav" onclick="goDay(-1)">◁ 昨日</button>
+        <button class="btn-nav" onclick="goToday()">今日</button>
+        <button class="btn-nav" onclick="goDay(1)">明日 ▷</button>
+        <button class="btn-nav" onclick="goDay(2)">后日 ▷</button>
+      </div>
+    </div>
+    <div class="content-card" id="contentCard"></div>
+    <div class="today-progress" id="todayProgress"></div>
+  </div>
+
+  <!-- Calendar Tab -->
+  <div class="tab-content" id="tabCalendar">
+    <div class="cal-header">
+      <span class="cal-title" id="calTitle"></span>
+      <div class="cal-nav">
+        <button class="btn-nav" onclick="calMonth(-1)">◁</button>
+        <button class="btn-nav" onclick="calToday()">本月</button>
+        <button class="btn-nav" onclick="calMonth(1)">▷</button>
+      </div>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="cal-legend">
+      <span class="cal-legend-item"><span class="cal-legend-dot read-sl"></span>声律启蒙</span>
+      <span class="cal-legend-item"><span class="cal-legend-dot read-lw"></span>龙文鞭影</span>
+      <span class="cal-legend-item"><span class="cal-legend-dot today"></span>今日</span>
+      <span class="cal-legend-item"><span class="cal-legend-dot future"></span>未来</span>
+    </div>
+  </div>
+</main>
+
+<!-- Drawer -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header"><h2>全书目录</h2><button class="drawer-close" onclick="closeDrawer()">✕</button></div>
+  <div class="drawer-body" id="drawerBody"></div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+    <div class="modal-header"><h2>推送设置</h2><button class="drawer-close" onclick="closeSettings()">✕</button></div>
+    <div class="modal-body">
+      <h3>起始日期</h3>
+      <p>设置你开始阅读的日期。声律启蒙与龙文鞭影隔天轮换，各30则为完整一轮。</p>
+      <div class="date-setting">
+        <label for="startDateInput">起始日期：</label>
+        <input type="date" id="startDateInput" onchange="setStartDate(this.value)">
+      </div>
+      <div class="date-hint" id="dateHint"></div>
+
+      <h3>分享给朋友</h3>
+      <p style="font-size:.78rem">将 <b>index.html</b> 和 <b>data.js</b> 两个文件发给朋友，对方双击打开即可使用。通过在 URL 后加 <code style="background:var(--card);padding:.1rem .3rem;border-radius:3px;font-size:.72rem">?start=2026-04-28</code> 参数可以同步阅读进度。</p>
+      <div class="share-section">
+        <p style="font-size:.76rem;color:var(--ink-light);margin-bottom:.3rem">自定义分享链接（含起始日期参数）：</p>
+        <div class="share-url-box">
+          <input class="share-url-input" id="shareUrl" readonly>
+          <button class="btn-copy" onclick="copyShareUrl()">复制参数</button>
+        </div>
+        <p style="color:var(--ink-faint);font-size:.68rem;margin-top:.4rem">朋友拿到文件后，在浏览器地址栏的文件路径末尾粘贴 <code style="background:var(--card);padding:.1rem .2rem;border-radius:2px;font-size:.66rem">?start=你的起始日期</code> 即可同步进度。也可以打开后自己在设置中修改日期。</p>
+      </div>
+
+      <h3>浏览器通知推送</h3>
+      <p>授权后每日定时推送今日古文到浏览器通知栏。</p>
+      <div style="margin-top:.8rem"><button class="modal-btn primary" onclick="requestNotification()">授权通知推送</button></div>
+      <h3>微信 WorkBuddy 每日自动推送</h3>
+      <p>在 WorkBuddy 中创建自动化任务，每天定时将古文推送到微信。</p>
+      <div class="step"><div class="step-num">1</div><div class="step-text">在桌面端 WorkBuddy → 个人中心 → Claw 设置 中绑定微信并勾选「产物回传小程序」</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">对 WorkBuddy AI 发送以下指令创建每日推送任务：</div></div>
+      <div class="wb-config">
+        <h4>自动化配置指令</h4>
+        <p>复制以下内容发送给 WorkBuddy：</p>
+        <div class="config-code" id="wbConfigText">请创建一个每日定时自动化任务：
+- 时间：每天早上 8:00
+- 任务：读取 daily-guwen/data.js，根据当天日期计算出当日古文索引，将古文内容格式化为一段优美的消息推送给我，提升读者可以朗读和体会声韵美感
+- 包括书名、章节、正文和注释
+- 格式要适合微信阅读</div>
+        <button class="btn-copy" onclick="copyWbConfig()">复制配置指令</button>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="modal-btn secondary" onclick="closeSettings()">关闭</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<button class="btn-back-top" id="btnBackTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  var SL = SHENGLV_QIMENG;
+  var LW = LONGWEN_BIANYING;
+  var SL_TOTAL = SL.length;
+  var LW_TOTAL = LW.length;
+  var DEFAULT_START = '2026-04-28';
+  var BASE_DATE = loadStartDate();
+  BASE_DATE.setHours(0,0,0,0);
+  var currentOffset = 0;
+  var calYear, calMonth;
+  var today = new Date(); today.setHours(0,0,0,0);
+  calYear = today.getFullYear();
+  calMonth = today.getMonth();
+
+  // ===== Determine which book for a given day offset =====
+  // Even days (0,2,4...) -> 声律启蒙; Odd days (1,3,5...) -> 龙文鞭影
+  function isSlDay(offset){ return offset % 2 === 0; }
+
+  // ===== Start date management =====
+  function loadStartDate(){
+    // Priority: URL param > localStorage > default
+    var params = new URLSearchParams(window.location.search);
+    var urlDate = params.get('start');
+    if(urlDate){
+      var d = new Date(urlDate+'T00:00:00'); d.setHours(0,0,0,0);
+      if(!isNaN(d.getTime())){
+        localStorage.setItem('guwen_start_date', urlDate);
+        return d;
+      }
+    }
+    var saved = localStorage.getItem('guwen_start_date');
+    if(saved){
+      var d2 = new Date(saved); d2.setHours(0,0,0,0);
+      if(!isNaN(d2.getTime())) return d2;
+    }
+    return new Date(DEFAULT_START+'T00:00:00');
+  }
+  window.setStartDate = function(val){
+    if(!val) return;
+    var d = new Date(val+'T00:00:00');
+    if(isNaN(d.getTime())){ showToast('日期格式无效'); return; }
+    d.setHours(0,0,0,0);
+    if(d > today){ showToast('起始日期不能晚于今天'); return; }
+    localStorage.setItem('guwen_start_date', val);
+    BASE_DATE = d;
+    currentOffset = 0;
+    // Update URL without reload
+    var url = new URL(window.location);
+    url.searchParams.set('start', val);
+    history.replaceState(null, '', url);
+    renderCard();
+    renderDrawer();
+    updateDateHint();
+    updateBookIntro();
+    showToast('起始日期已设为 ' + val);
+  };
+  function updateDateHint(){
+    var el = document.getElementById('dateHint');
+    if(!el) return;
+    var days = Math.floor((today - BASE_DATE) / 86400000);
+    if(days < 0) days = 0;
+    var slRead = Math.floor(days / 2) + 1;
+    var lwRead = Math.floor((days + 1) / 2);
+    slRead = Math.min(slRead, SL_TOTAL);
+    lwRead = Math.min(lwRead, SL_TOTAL);
+    el.textContent = '声律已读 ' + slRead + '/' + SL_TOTAL + ' 则，龙文已读 ' + lwRead + '/' + LW_TOTAL + ' 则';
+  }
+  function formatDateInput(d){
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+
+  // ===== Scroll -> back-to-top button =====
+  window.addEventListener('scroll', function(){
+    var btn = document.getElementById('btnBackTop');
+    if(!btn) return;
+    if(window.scrollY > 300) btn.classList.add('show');
+    else btn.classList.remove('show');
+  });
+
+  // ===== Core helpers =====
+  function getTodayIndex(){
+    var now = new Date(); now.setHours(0,0,0,0);
+    return Math.floor((now - BASE_DATE) / 86400000);
+  }
+
+  // Get the article for a given absolute day offset from BASE_DATE
+  function getArticle(dayOffset){
+    var clampedOffset = ((dayOffset % 1000000) + 1000000) % 1000000;
+    var isSl = clampedOffset % 2 === 0;
+    var bookIndex;
+    if(isSl){
+      bookIndex = Math.floor(clampedOffset / 2) % SL_TOTAL;
+      return {book: SL[bookIndex], isSl: true, bookIdx: bookIndex, absDay: clampedOffset};
+    } else {
+      bookIndex = Math.floor((clampedOffset - 1) / 2) % LW_TOTAL;
+      return {book: LW[bookIndex], isSl: false, bookIdx: bookIndex, absDay: clampedOffset};
+    }
+  }
+
+  function getCurrentArticle(){
+    return getArticle(getTodayIndex() + currentOffset);
+  }
+
+  function getDateStr(offset){
+    var d = new Date(BASE_DATE.getTime() + (getTodayIndex() + offset) * 86400000);
+    return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0')+' 星期'+['日','一','二','三','四','五','六'][d.getDay()];
+  }
+
+  // ===== Book intro highlight =====
+  function updateBookIntro(){
+    var dayOffset = getTodayIndex() + currentOffset;
+    var sl = isSlDay(dayOffset);
+    document.getElementById('introSL').classList.toggle('today-book', sl);
+    document.getElementById('introLW').classList.toggle('today-book', !sl);
+    document.getElementById('todayDotSL').innerHTML = sl ? '<span class="book-intro-today-dot"></span>今日' : '';
+    document.getElementById('todayDotLW').innerHTML = !sl ? '<span class="book-intro-today-dot"></span>今日' : '';
+  }
+
+  // ===== Tab switching =====
+  window.switchTab = function(tab){
+    document.querySelectorAll('.tab-btn').forEach(function(b,i){ b.classList.toggle('active', (tab==='today'&&i===0)||(tab==='calendar'&&i===1)); });
+    document.getElementById('tabToday').classList.toggle('active', tab==='today');
+    document.getElementById('tabCalendar').classList.toggle('active', tab==='calendar');
+    if(tab==='calendar') renderCalendar();
+  };
+
+  // ===== Card rendering =====
+  function renderCard(){
+    var info = getCurrentArticle();
+    var item = info.book;
+    var card = document.getElementById('contentCard');
+
+    var sectionsHtml = '';
+    for(var i=0;i<item.sections.length;i++){
+      sectionsHtml += '<div class="text-section" data-index="'+(i+1)+'"><div class="text-content">'+item.sections[i]+'</div></div>';
+    }
+
+    var notesHtml = '';
+    if(item.notes && item.notes.length > 0){
+      notesHtml = '<button class="notes-toggle" onclick="toggleNotes(this)"><span class="arrow">▶</span> 展开注释与典故（'+item.notes.length+'条）</button><div class="notes-content">';
+      for(var j=0;j<item.notes.length;j++){
+        var note = item.notes[j];
+        var text = typeof note === 'string' ? note : (note.text || note);
+        var link = (typeof note === 'object' && note.link) ? note.link : '';
+        var linkHtml = link ? ' <a class="note-link" href="'+link+'" onclick="showReadingTip(event)">📖 查看百科</a>' : '';
+        notesHtml += '<div class="note-item"><div class="note-dot"></div><div>'+text+linkHtml+'</div></div>';
+      }
+      notesHtml += '</div>';
+    }
+
+    var author = info.isSl ? '车万育' : '萧良有';
+    var total = info.isSl ? SL_TOTAL : LW_TOTAL;
+    var bookLabel = info.isSl ? '声律启蒙' : '龙文鞭影';
+    var cycleNum = Math.floor(info.bookIdx / total) + 1;
+    var posInBook = (info.bookIdx % total) + 1;
+
+    card.innerHTML = '<div class="card-header"><div class="book-info"><div class="book-name">'+item.book+'</div><div class="book-meta"><span>'+author+'</span><span>'+item.volume+'</span></div></div><div class="chapter-badge">'+item.chapter+'</div></div><div class="card-body">'+sectionsHtml+notesHtml+'</div><div class="card-footer"><div class="day-counter">'+bookLabel+' · 第 '+posInBook+' / '+total+' 则</div><button class="btn-random" onclick="randomArticle()">🎲 随机一篇</button></div>';
+
+    document.getElementById('dateDisplay').textContent = getDateStr(currentOffset);
+    updateBookIntro();
+
+    // Progress — per-book
+    var days = getTodayIndex();
+    var slRead = Math.floor(days / 2) + 1;
+    var lwRead = Math.floor((days + 1) / 2);
+    slRead = Math.min(slRead, SL_TOTAL);
+    lwRead = Math.min(lwRead, LW_TOTAL);
+    var totalBoth = SL_TOTAL + LW_TOTAL;
+    var readBoth = slRead + lwRead;
+    var pct = Math.min(100, Math.round((readBoth / totalBoth) * 100));
+    var remain = totalBoth - readBoth;
+
+    document.getElementById('todayProgress').innerHTML = '<div class="progress-header"><span class="progress-title">总体阅读进度（声律'+SL_TOTAL+'+龙文'+LW_TOTAL+'=' + totalBoth + '则）</span><span class="progress-pct">'+pct+'%</span></div><div class="progress-bar"><div class="progress-fill" style="width:'+pct+'%"></div></div><div class="progress-stats"><span class="stat-read"><span></span>已读 '+readBoth+' 则</span><span class="stat-remain"><span></span>待读 '+remain+' 则</span><span class="stat-cycle"><span></span>声律 '+slRead+'/'+SL_TOTAL+' · 龙文 '+lwRead+'/'+LW_TOTAL+'</span></div>';
+  }
+
+  // ===== Calendar =====
+  function renderCalendar(){
+    var y = calYear, m = calMonth;
+    var months = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+    document.getElementById('calTitle').textContent = y + '年' + months[m];
+
+    var grid = document.getElementById('calGrid');
+    var weekDays = ['日','一','二','三','四','五','六'];
+    var html = '';
+    for(var w=0;w<7;w++) html += '<div class="cal-weekday">'+weekDays[w]+'</div>';
+
+    var firstDay = new Date(y, m, 1).getDay();
+    var daysInMonth = new Date(y, m+1, 0).getDate();
+
+    for(var e=0;e<firstDay;e++) html += '<div class="cal-day" style="cursor:default;opacity:0"></div>';
+
+    for(var d=1;d<=daysInMonth;d++){
+      var date = new Date(y, m, d); date.setHours(0,0,0,0);
+      var isToday = date.getTime() === today.getTime();
+      var isPast = date < today;
+      var isFuture = date > today;
+      var absDay = Math.floor((date - BASE_DATE) / 86400000);
+      var info = getArticle(absDay);
+      var label = info.book.charAt(0) + '·' + info.book.chapter;
+
+      var cls = 'cal-day';
+      if(isToday) cls += ' today';
+      else if(isFuture) cls += ' future';
+      else if(info.isSl) cls += ' read-sl';
+      else cls += ' read-lw';
+
+      var onclick = isFuture ? '' : ' onclick="goToDate('+y+','+m+','+d+')"';
+      html += '<div class="'+cls+'"'+onclick+'><span class="cal-day-num">'+d+'</span><span class="cal-day-label">'+label+'</span></div>';
+    }
+    grid.innerHTML = html;
+  }
+
+  window.calMonth = function(dir){
+    calMonth += dir;
+    if(calMonth > 11){ calMonth = 0; calYear++; }
+    if(calMonth < 0){ calMonth = 11; calYear--; }
+    renderCalendar();
+  };
+  window.calToday = function(){
+    var t = new Date(); calYear = t.getFullYear(); calMonth = t.getMonth();
+    renderCalendar();
+  };
+  window.goToDate = function(y,m,d){
+    var target = new Date(y, m, d); target.setHours(0,0,0,0);
+    var ti = getTodayIndex();
+    var targetI = Math.floor((target - BASE_DATE) / 86400000);
+    currentOffset = targetI - ti;
+    switchTab('today');
+    renderCard();
+    window.scrollTo({top:0, behavior:'smooth'});
+  };
+
+  // ===== Drawer =====
+  function renderDrawer(){
+    var body = document.getElementById('drawerBody');
+    var currentInfo = getCurrentArticle();
+
+    // Group by book+volume
+    function renderBookGroup(title, data, isSl){
+      var groups = {};
+      for(var i=0;i<data.length;i++){
+        var name = data[i].volume;
+        if(!groups[name]) groups[name] = [];
+        groups[name].push({idx:i, item:data[i]});
+      }
+      var html = '<div class="drawer-group"><div class="drawer-group-title">'+title+'</div>';
+      var keys = Object.keys(groups);
+      for(var k=0;k<keys.length;k++){
+        var items = groups[keys[k]];
+        for(var j=0;j<items.length;j++){
+          var isCurrent = currentInfo.isSl === isSl && items[j].idx === currentInfo.bookIdx;
+          // Create a unique nav target
+          var absDay;
+          if(isSl) absDay = items[j].idx * 2;
+          else absDay = items[j].idx * 2 + 1;
+          html += '<div class="drawer-item'+(isCurrent?' current':'')+'" onclick="goToAbsDay('+absDay+')">';
+          html += '<div><span class="drawer-item-title">'+items[j].item.chapter+'</span>';
+          html += '<span class="drawer-item-sub"> · '+items[j].item.sections[0].substring(0,10)+'…</span></div>';
+          html += '<span class="drawer-item-read">#'+(items[j].idx+1)+'</span></div>';
+        }
+      }
+      html += '</div>';
+      return html;
+    }
+
+    var html = renderBookGroup('声律启蒙', SL, true);
+    html += renderBookGroup('龙文鞭影', LW, false);
+    body.innerHTML = html;
+  }
+
+  // ===== Navigation =====
+  // goDay now steps by 1 (which skips to the next day's book)
+  window.goDay = function(dir){
+    currentOffset += dir;
+    renderCard(); window.scrollTo({top:0,behavior:'smooth'});
+  };
+  window.goToday = function(){ currentOffset = 0; renderCard(); };
+  window.goToAbsDay = function(absDay){
+    var ti = getTodayIndex();
+    currentOffset = absDay - ti;
+    renderCard(); closeDrawer(); renderDrawer();
+    switchTab('today');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  window.randomArticle = function(){
+    // Random: pick either book
+    var isSl = Math.random() < 0.5;
+    var bookIdx, absDay;
+    if(isSl){
+      bookIdx = Math.floor(Math.random() * SL_TOTAL);
+      absDay = bookIdx * 2;
+    } else {
+      bookIdx = Math.floor(Math.random() * LW_TOTAL);
+      absDay = bookIdx * 2 + 1;
+    }
+    currentOffset = absDay - getTodayIndex();
+    renderCard(); renderDrawer();
+    showToast('已随机切换');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+
+  // ===== Notes toggle =====
+  window.toggleNotes = function(el){
+    el.classList.toggle('open');
+    var c = el.nextElementSibling;
+    c.classList.toggle('open');
+    el.querySelector('.arrow').textContent = el.classList.contains('open') ? '▼' : '▶';
+  };
+
+  // ===== Reading tip for wiki links =====
+  window.showReadingTip = function(e){
+    showToast('阅读完毕后，点击浏览器左上角 ← 返回即可');
+  };
+
+  // ===== Drawer =====
+  window.openDrawer = function(){
+    renderDrawer();
+    document.getElementById('drawerOverlay').classList.add('open');
+    document.getElementById('drawer').classList.add('open');
+  };
+  window.closeDrawer = function(){
+    document.getElementById('drawerOverlay').classList.remove('open');
+    document.getElementById('drawer').classList.remove('open');
+  };
+
+  // ===== Settings =====
+  window.openSettings = function(){
+    document.getElementById('startDateInput').value = formatDateInput(BASE_DATE);
+    updateDateHint();
+    // Generate share param (just the ?start= part, works with file:// and http)
+    var shareParam = '?start=' + formatDateInput(BASE_DATE);
+    document.getElementById('shareUrl').value = shareParam;
+    document.getElementById('settingsModal').classList.add('open');
+    updateNotifStatus();
+  };
+  window.closeSettings = function(){ document.getElementById('settingsModal').classList.remove('open'); };
+  window.copyWbConfig = function(){
+    var text = document.getElementById('wbConfigText').textContent;
+    if(navigator.clipboard){ navigator.clipboard.writeText(text).then(function(){ showToast('已复制到剪贴板'); }); }
+    else{ var ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showToast('已复制到剪贴板'); }
+  };
+  window.copyShareUrl = function(){
+    var url = document.getElementById('shareUrl').value;
+    if(navigator.clipboard){ navigator.clipboard.writeText(url).then(function(){ showToast('分享链接已复制'); }); }
+    else{ var ta=document.createElement('textarea'); ta.value=url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showToast('分享链接已复制'); }
+  };
+
+  // ===== Notifications =====
+  function showToast(msg){ var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(function(){ t.classList.remove('show'); }, 2500); }
+
+  window.requestNotification = function(){
+    if(!('Notification' in window)){ showToast('浏览器不支持通知'); return; }
+    Notification.requestPermission().then(function(r){
+      if(r==='granted'){ showToast('通知已开启，每天早上8:00推送'); document.getElementById('pushBanner').classList.add('hidden'); document.getElementById('btnNotif').classList.add('active'); scheduleNotification(); }
+      else showToast('通知权限被拒绝');
+      updateNotifStatus();
+    });
+  };
+  function updateNotifStatus(){
+    var el = document.getElementById('notifStatus');
+    if(!el) return;
+    if(!('Notification' in window)){ el.innerHTML='<span>浏览器不支持通知</span>'; return; }
+    var p = Notification.permission;
+    el.innerHTML = p==='granted' ? '<span style="color:var(--green)">● 已开启</span> 每天8:00推送' : p==='denied' ? '<span style="color:#f44">● 已拒绝</span> 请在浏览器设置中开启' : '<span style="color:#f90">● 未授权</span>';
+  }
+  function scheduleNotification(){
+    if(Notification.permission!=='granted') return;
+    var now=new Date(), target=new Date(); target.setHours(8,0,0,0);
+    if(now>target) target.setDate(target.getDate()+1);
+    setTimeout(function(){
+      var info = getCurrentArticle();
+      new Notification('每日古文 · '+info.book.book+' '+info.book.chapter, {body:info.book.sections[0].substring(0,60)+'…', tag:'daily-guwen'});
+      scheduleNotification();
+    }, target-now);
+  }
+  if(Notification.permission==='granted'){ document.getElementById('pushBanner').classList.add('hidden'); document.getElementById('btnNotif').classList.add('active'); scheduleNotification(); }
+
+  // ===== Init =====
+  updateBookIntro();
+  renderCard();
+})();
+</script>
+</body>
+</html>
